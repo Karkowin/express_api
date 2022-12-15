@@ -10,7 +10,7 @@ mongoose.connect(`mongodb://${config.mongo.user}:${config.mongo.password}@${conf
 
 const app = express()
 
-app.use('./api', routerApi)
+app.use('/api', routerApi)
 
 app.listen(parseInt(config.server.port), () => {
   console.log("Server listening on port " + config.server.port)
