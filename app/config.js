@@ -11,6 +11,7 @@ export default {
         database: process.env.MONGO_DATABASE
     },
     server: {
-        port: process.env.SERVER_PORT
-    }
+        port: process.env.SERVER_PORT,
+    },
+    secret: process.env.SECRET
 }

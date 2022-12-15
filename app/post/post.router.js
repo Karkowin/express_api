@@ -1,28 +1,57 @@
-import { Router } from 'express';
-import { getPosts } from './post.controller.js';
+import { Router } from 'express'
+import { authCheck } from '../middleware/auth.check.js'
+import { createPost, deletePost, getPosts, getSinglePost, updatePost } from './post.controller.js'
 
-const router = Router();
+const router = Router()
 
-router.get('/', getPosts);
+/**
+ * GET /api/post
+ * @summary Get all posts
+ * @tags posts
+ * @return {array<object>} 200 - an array of posts
+ */
+router.get('/', getPosts)
 
-router.post('/', (req, res) => {
-    res.send('Route pour créer un post');
-});
+/**
+ * POST /api/post
+ * @summary Create a post
+ * @tags posts
+ * @param {object} request.body.required - the post to create
+ * @return {object} 201 - the created post
+ * @security bearerAuth
+ */
+router.post('/', authCheck, createPost)
 
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    res.send('Route pour récupérer un post');
-});
+/**
+ * GET /api/post/{id}
+ * @summary Get a post by id
+ * @tags posts
+ * @param {string} id.path.required - the post id
+ * @return {object} 200 - the post
+ */
+router.get('/:id', getSinglePost)
 
-router.put('/:id', (req, res) => {
-    const { id } = req.params;
-    res.send('Route pour modifier un post');
-});
+/**
+ * PUT /api/post/{id}
+ * @summary Update a post by id
+ * @tags posts
+ * @param {string} id.path.required - the post id
+ * @param {object} request.body.required - the post to update
+ * @return {object} 200 - the updated post
+ * @security bearerAuth
+ */
+router.put('/:id', authCheck, updatePost)
 
-router.delete('/:id', (req, res) => {
-    const { id } = req.params;
-    res.send('Route pour supprimer un post');
-});
+
+/**
+ * DELETE /api/post/{id}
+ * @summary Delete a post by id
+ * @tags posts
+ * @param {string} id.path.required - the post id
+ * @return {object} 200 - the deleted post
+ * @security bearerAuth
+ */
+router.delete('/:id', authCheck, deletePost)
 
 
 export {
